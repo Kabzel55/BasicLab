@@ -7,6 +7,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.View;
 
@@ -15,10 +17,12 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
 {
-
+    protected static int activatedFragment = 1;
+    protected static Fragment fragment;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -40,7 +44,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu)
     {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+       getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -52,18 +56,56 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings)
+        if (id == R.id.action_1)
         {
-            displaySnackbarText(R.string.action_settings);
-            return true;
+            displaySnackbarText(R.string.action_1);
+            switch (activatedFragment)
+            {
+                case 2:
+                {
+                    NavHostFragment.findNavController(fragment).navigate(R.id.action_SecondFragment_to_FirstFragment);
+                    break;
+                }
+                case 3:
+                {
+                    NavHostFragment.findNavController(fragment).navigate(R.id.action_ThirdFragment_to_FirstFragment);
+                    break;
+                }
+            }
         }
-        if (id == R.id.Akcja)
+        if (id == R.id.action_2)
         {
-            displaySnackbarText(R.string.action_akcja);
+            displaySnackbarText(R.string.action_2);
+            switch (activatedFragment)
+            {
+                case 1:
+                {
+                    NavHostFragment.findNavController(fragment).navigate(R.id.action_FirstFragment_to_SecondFragment);
+                    break;
+                }
+                case 3:
+                {
+                    NavHostFragment.findNavController(fragment).navigate(R.id.action_ThirdFragment_to_SecondFragment);
+                    break;
+                }
+            }
         }
-        if (id == R.id.Reakcja)
+        if (id == R.id.action_3)
         {
-            displaySnackbarText(R.string.action_reakcja);
+            displaySnackbarText(R.string.action_3);
+            switch (activatedFragment)
+            {
+                case 1:
+                {
+                    NavHostFragment.findNavController(fragment).navigate(R.id.action_FirstFragment_to_ThirdFragment);
+                    break;
+                }
+                case 2:
+                {
+                    NavHostFragment.findNavController(fragment).navigate(R.id.action_SecondFragment_to_ThirdFragment);
+                    break;
+                }
+            }
         }
 
         return super.onOptionsItemSelected(item);
